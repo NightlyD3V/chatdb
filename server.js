@@ -14,10 +14,6 @@ server.listen(PORT, () => {
     console.log(`***Socket server is running on ${PORT}***`)
 })
 
-server.get('/', (req, res) => {
-    return(<h1>Socket.io server</h1>)
-})
-
 //WEBSOCKET SERVER
 // const server = http.createServer((req, res) => {
 //     console.log('we have recieved a request');
