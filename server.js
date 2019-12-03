@@ -4,13 +4,18 @@ const PORT = process.env.PORT || 8080
 let clients = [];
 let history = [];
 //EXPRESS SERVER
-const server = require('express')();
-
+const app = require('express')();
+// const expressServer = express();
+//CREATE HTTP SERVER
+const server = require('http').Server(app);
 //CREATE SOCKET.IO SERVER
-const io = socketIO(server)
-
+const io = require('socket.io')(server);
 server.listen(PORT, () => {
     console.log(`***Socket server is running on ${PORT}***`)
+})
+
+app.get('/', (req, res) => {
+    res.send(`<h1>Socket.io Server</h1>`)
 })
 
 //WEBSOCKET SERVER
