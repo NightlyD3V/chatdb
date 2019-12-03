@@ -7,7 +7,7 @@ let history = [];
 const app = require('express')();
 // const expressServer = express();
 //CREATE HTTP SERVER
-const server = require('http').Server(app);
+const server = require('https').Server(app);
 //CREATE SOCKET.IO SERVER
 const io = require('socket.io')(server);
 server.listen(PORT, () => {
