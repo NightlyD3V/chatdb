@@ -2,6 +2,7 @@
 const PORT = process.env.PORT || 8080
 //CONECTED CLIENTS
 let clients = [];
+let connectedClients = 0;
 let history = [];
 //EXPRESS SERVER
 const app = require('express')();
@@ -36,10 +37,12 @@ io.on('connect', (socket) => {
         socket.removeAllListeners('send message');
         socket.removeAllListeners('disconnect');
         io.removeAllListeners('connection');
+        io.emit('client connected', connectedClients === 1 ? 1 : connectedClients - 1)
         console.log('user disconnected')
     })
     socket.on('client connected', () => {
-        io.emit('client connected', io.engine.clientsCount)
+        console.log('client is connecting');
+        io.emit('client connected', connectedClients += 1)
     })
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg)
