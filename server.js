@@ -38,6 +38,9 @@ io.on('connect', (socket) => {
         io.removeAllListeners('connection');
         console.log('user disconnected')
     })
+    socket.on('client connected', () => {
+        io.emit('client connected', io.engine.clientsCount)
+    })
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg)
         console.log(`Message received: ${msg}`);
