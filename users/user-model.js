@@ -5,6 +5,17 @@ function addUser(user) {
     .insert(user);
 };
 
+function findById(id) {
+    return db('users')
+    .where(id);
+}
+
+function login(user) {
+    //Authenticate
+
+}
+
 module.exports = {
-    addUser
+    addUser,
+    login
 }

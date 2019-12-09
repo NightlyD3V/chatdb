@@ -5,7 +5,7 @@ let clients = [];
 let connectedClients = 0;
 let history = [];
 //HELMET
-const helmet = require('helmet')
+const helmet = require('helmet');
 //ROUTES
 const UserRouter = require('./users/user-router');
 //EXPRESS 
@@ -17,18 +17,17 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //MIDDLEWARE
 app.use(helmet());
-app.use(express.json())
-app.use('/api/users', UserRouter)
+app.use(express.json());
+app.use('/api/users', UserRouter);
 
 server.listen(PORT, () => {
-    console.log(`***Socket server is running on ${PORT}***`)
-})
-
+    console.log(`***Socket server is running on ${PORT}***`);
+});
 
 //DEFAULT ROUTE
 app.get('/', (req, res) => {
-    res.send(`<h1>Socket.io Server</h1>`)
-})
+    res.send(`<h1>Socket.io Server</h1>`);
+});
 
 //SOCKET.IO SERVER
 io.on('connect', (socket) => {
@@ -41,16 +40,20 @@ io.on('connect', (socket) => {
         io.emit('client connected', parseInt(io.engine.clientsCount))
         console.log(parseInt(io.engine.clientsCount))
         console.log('user disconnected')
-    })
+    });
     socket.on('client connected', () => {
-        console.log('client is connecting');
+        console.log('client is connected');
         console.log(parseInt(io.engine.clientsCount))
         io.emit('client connected', parseInt(io.engine.clientsCount))
-    })
+    });
+    socket.on('typing', () => {
+        io.emit('typing');
+        console.log('A user is typing');
+    });
     socket.on('chat message', (msg) => {
         io.emit('chat message', msg)
         console.log(`Message received: ${msg}`);
-    })
+    });
 });
 
 //WEBSOCKET SERVER
