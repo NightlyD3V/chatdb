@@ -2,6 +2,7 @@
 const PORT = process.env.PORT || 8080
 //CONECTED CLIENTS
 let clients = [];
+let initalClient = '';
 let connectedClients = 0;
 let history = [];
 //HELMET
@@ -41,6 +42,7 @@ io.on('connect', (socket) => {
         socket.removeAllListeners('disconnect');
         io.removeAllListeners('connection');
         io.emit('client connected', parseInt(io.engine.clientsCount))
+        io.emit('userlist', (clients.splice(clients.indexOf(initialClient), 1)))
         console.log(parseInt(io.engine.clientsCount))
         console.log('user disconnected')
     });
@@ -51,6 +53,7 @@ io.on('connect', (socket) => {
     });
     socket.on('username', (user) => {
         clients.push(user)
+        initialClient = user;
         io.emit('userlist', (clients))
     })
     socket.on('typing', () => {
