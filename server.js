@@ -63,7 +63,7 @@ io.on('connect', (socket) => {
     });
     socket.on('chat message', (msg, user) => {
         io.emit('chat message', (user, msg))
-        console.log(`Message received: ${msg}`);
+        console.log(`Message has been received: ${msg}`);
     });
     socket.on('gif', (gif) => {
         io.emit('gif', gif);
