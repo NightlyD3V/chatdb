@@ -5,17 +5,18 @@ function addUser(user) {
     .insert(user);
 };
 
-function findById(id) {
+function findBy(filter) {
     return db('users')
-    .where(id);
-}
+    .select('id', 'name', 'password')
+    .where(filter);
+};
 
-function login(user) {
-    //Authenticate
-
-}
+function getAll() {
+    return db('users');
+};
 
 module.exports = {
     addUser,
-    login
-}
+    findBy,
+    getAll
+};

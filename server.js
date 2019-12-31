@@ -6,6 +6,8 @@ let connectedClients = 0;
 let history = [];
 //HELMET
 const helmet = require('helmet');
+//CORS
+const cors = require('cors');
 //ROUTES
 const UserRouter = require('./users/user-router');
 //EXPRESS 
@@ -17,6 +19,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //MIDDLEWARE
 app.use(helmet());
+app.use(cors());
 app.use(express.json());
 app.use('/api/users', UserRouter);
 
@@ -58,6 +61,10 @@ io.on('connect', (socket) => {
         io.emit('chat message', msg)
         console.log(`Message received: ${msg}`);
     });
+    socket.on('gif', (gif) => {
+        io.emit('gif', gif);
+        console.log(`A gif was clicked! ${gif}`);
+    })
 });
 
 //WEBSOCKET SERVER
