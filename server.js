@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
 //SOCKET.IO SERVER
 io.on('connect', (socket) => {
     console.log('a user connected');
+    io.emit('userlist', (clients))
     //console.log(io.sockets.clients());
     socket.on('disconnect', () => {
         socket.removeAllListeners('send message');
