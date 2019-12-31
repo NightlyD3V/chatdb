@@ -46,6 +46,10 @@ io.on('connect', (socket) => {
         console.log(parseInt(io.engine.clientsCount))
         io.emit('client connected', parseInt(io.engine.clientsCount))
     });
+    socket.on('username', (user) => {
+        clients.push(user)
+        io.emit('userlist', (clients))
+    })
     socket.on('typing', () => {
         io.emit('typing');
         console.log('A user is typing');
