@@ -62,7 +62,7 @@ io.on('connect', (socket) => {
         console.log('A user is typing');
     });
     socket.on('chat message', (msg, user) => {
-        io.emit('chat message', (user, msg))
+        io.emit('chat message', (user + msg))
         console.log(`Message has been received: ${msg}`);
     });
     socket.on('gif', (gif) => {
