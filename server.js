@@ -52,7 +52,7 @@ io.on('connect', (socket) => {
         console.log(parseInt(io.engine.clientsCount))
         io.emit('client connected', parseInt(io.engine.clientsCount))
     });
-    socket.on('username', (user) => {
+    socket.on('userlist', (user) => {
         clients.push(user)
         initialClient = user;
         io.emit('userlist', (clients))
