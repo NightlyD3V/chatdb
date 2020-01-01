@@ -2,7 +2,7 @@
 const PORT = process.env.PORT || 8080
 //CONECTED CLIENTS
 let clients = [];
-let initalClient = '';
+let initialClient = '';
 let connectedClients = 0;
 let history = [];
 //HELMET
@@ -61,8 +61,11 @@ io.on('connect', (socket) => {
         io.emit('typing');
         console.log('A user is typing');
     });
-    socket.on('chat message', (msg, user) => {
-        io.emit('chat message', (user + msg))
+    socket.on('chat message', (user, msg) => {
+        //io.emit('chat message', (user + msg))
+        io.emit('chat message', (user + ': ' + msg))
+        console.log(msg)
+        console.log(user)
         console.log(`Message has been received: ${msg}`);
     });
     socket.on('gif', (gif) => {
