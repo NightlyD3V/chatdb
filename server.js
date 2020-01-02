@@ -1,9 +1,6 @@
 //HEROKU
 const PORT = process.env.PORT || 8080
 //CONECTED CLIENTS
-let clients = [];
-let initialClient = '';
-let users = [];
 let connectedClients = 0;
 let history = [];
 //HELMET
@@ -37,6 +34,8 @@ app.get('/', (req, res) => {
 //SOCKET.IO SERVER
 io.on('connect', (socket) => {
     console.log('a user connected');
+    let clients = [];
+    let initialClient = '';
     io.emit('userlist', (clients))
     //console.log(io.sockets.clients());
     socket.on('disconnect', () => {
@@ -54,12 +53,6 @@ io.on('connect', (socket) => {
         console.log(parseInt(io.engine.clientsCount))
         io.emit('client connected', parseInt(io.engine.clientsCount))
     });
-    //PROFILE
-    socket.on('newUser', (user) => {
-        users.push(user);
-        io.emit('userInfo', (users));
-    })
-    //NAME
     socket.on('username', (user) => {
         clients.push(user)
         initialClient = user;
