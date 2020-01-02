@@ -3,6 +3,7 @@ const PORT = process.env.PORT || 8080
 //CONECTED CLIENTS
 let clients = [];
 let initialClient = '';
+let users = [];
 let connectedClients = 0;
 let history = [];
 //HELMET
@@ -47,11 +48,18 @@ io.on('connect', (socket) => {
         console.log(parseInt(io.engine.clientsCount))
         console.log('user disconnected')
     });
+    //USER INFO
     socket.on('client connected', () => {
         console.log('client is connected');
         console.log(parseInt(io.engine.clientsCount))
         io.emit('client connected', parseInt(io.engine.clientsCount))
     });
+    //PROFILE
+    socket.on('newUser', (user) => {
+        users.push(user);
+        io.emit('userInfo', (users));
+    })
+    //NAME
     socket.on('username', (user) => {
         clients.push(user)
         initialClient = user;
@@ -61,6 +69,7 @@ io.on('connect', (socket) => {
         io.emit('typing');
         console.log('A user is typing');
     });
+    //MESSAGES
     socket.on('chat message', (user, msg) => {
         //io.emit('chat message', (user + msg))
         io.emit('chat message', (user + ': ' + msg))
@@ -68,6 +77,7 @@ io.on('connect', (socket) => {
         console.log(user)
         console.log(`Message has been received: ${msg}`);
     });
+    //GIFS
     socket.on('gif', (gif) => {
         io.emit('gif', gif);
         console.log(`A gif was clicked! ${gif}`);
